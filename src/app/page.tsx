@@ -111,7 +111,7 @@ export default function Home() {
   return (
     <main className={styles.container}>
       <header className={styles.header}>
-        <h1>📱 PWA CRUD POC</h1>
+        <h1>PWA CRUD POC</h1>
         <p>Simple Next.js + PWA Demo</p>
       </header>
 

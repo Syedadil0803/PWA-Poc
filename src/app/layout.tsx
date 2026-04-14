@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "MakeIt — Task Manager",
   description:
-    "A beautiful progressive web app for managing tasks. Built with Next.js, PostgreSQL, and Prisma.",
+    "A beautiful progressive web app for managing tasks. Built with Next.js and PostgreSQL.",
   keywords: ["task manager", "pwa", "productivity", "next.js"],
   appleWebApp: {
     capable: true,
