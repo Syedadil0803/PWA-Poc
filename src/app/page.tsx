@@ -1,5 +1,6 @@
 "use client";
 
+import { useSession, signIn, signOut } from "next-auth/react";
 import { useState, useEffect, useCallback } from "react";
 import styles from "./page.module.css";
 
@@ -17,6 +18,7 @@ export default function Home() {
   const [submitting, setSubmitting] = useState(false);
   const [editingId, setEditingId] = useState<number | null>(null);
   const [editValue, setEditValue] = useState("");
+  const { data: session, status } = useSession();
 
   // Fetch items
   const fetchItems = useCallback(async () => {
@@ -100,6 +102,27 @@ export default function Home() {
     setEditValue("");
   };
 
+  //  AUTH CHECK START
+
+  if (status === "loading") {
+    return (
+      <main className={styles.container}>
+        <p>Checking authentication...</p>
+      </main>
+    );
+  }
+
+  if (!session) {
+    return (
+      <main className={styles.container}>
+        <h1>Login Required</h1>
+        <button onClick={() => signIn("google")}>Sign in with Google</button>
+      </main>
+    );
+  }
+
+  //  AUTH CHECK END
+
   if (loading) {
     return (
       <main className={styles.container}>
@@ -111,8 +134,33 @@ export default function Home() {
   return (
     <main className={styles.container}>
       <header className={styles.header}>
-        <h1>PWA CRUD POC</h1>
-        <p>Simple Next.js + PWA Demo</p>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <div>
+            <h1>PWA CRUD POC</h1>
+            <p>Simple Next.js + PWA Demo</p>
+          </div>
+
+          {/* ✅ Logout Button */}
+          <button
+            onClick={() => signOut()}
+            style={{
+              padding: "8px 12px",
+              backgroundColor: "#ff4d4f",
+              color: "white",
+              border: "none",
+              borderRadius: "6px",
+              cursor: "pointer",
+            }}
+          >
+            Logout
+          </button>
+        </div>
       </header>
 
       <form className={styles.createForm} onSubmit={handleCreate}>
